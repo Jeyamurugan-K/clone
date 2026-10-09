@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My New Project | Customer Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <span class="brand-logo">M</span>
+                <div>
+                    <h2>My Project</h2>
+                    <small>ADMIN DASHBOARD</small>
+                </div>
+            </div>
+
+            <p class="nav-heading">MENU</p>
+            <nav>
+                <a class="nav-link active" href="#overview">▦ &nbsp; Dashboard</a>
+                <a class="nav-link" href="#customers">♙ &nbsp; Customers</a>
+                <a class="nav-link" href="#customers">▤ &nbsp; Records</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="profile-avatar">AD</div>
+                <div>
+                    <strong>Admin User</strong>
+                    <small>Administrator</small>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content" id="overview">
+            <header class="topbar">
+                <button class="menu-button" id="mobileMenu"
+                    aria-label="Toggle menu">☰</button>
+                <div>
+                    <span class="muted">Workspace /</span>
+                    <strong> Dashboard</strong>
+                </div>
+                <span class="online-status">● Local storage enabled</span>
+            </header>
+
+            <section class="welcome">
+                <div>
+                    <p class="eyebrow">OVERVIEW</p>
+                    <h1>Welcome back, Admin!</h1>
+                    <p class="muted">Manage your customers in one place.</p>
+                </div>
+                <button class="btn btn-primary" id="addCustomerBtn">
+                    + Add Customer
+                </button>
+            </section>
+
+            <section class="stats-grid">
+                <article class="stat-card">
+                    <div class="stat-icon purple">♙</div>
+                    <p>Total Customers</p>
+                    <h2 id="totalCustomers">0</h2>
+                    <small>All customer records</small>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon green">✓</div>
+                    <p>Active Customers</p>
+                    <h2 id="activeCustomers">0</h2>
+                    <small>Currently active</small>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon orange">◷</div>
+                    <p>Inactive Customers</p>
+                    <h2 id="inactiveCustomers">0</h2>
+                    <small>Currently inactive</small>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon blue">＋</div>
+                    <p>New Customers</p>
+                    <h2 id="newCustomers">0</h2>
+                    <small>Added this month</small>
+                </article>
+            </section>
+
+            <section class="content-card" id="customers">
+                <div class="section-heading">
+                    <div>
+                        <h2>Customer Management</h2>
+                        <p class="muted">Add, search, update and manage records.</p>
+                    </div>
+                    <button class="btn btn-secondary" id="exportBtn">
+                        ↓ Export CSV
+                    </button>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span>⌕</span>
+                        <input id="searchInput" type="search"
+                            placeholder="Search name, email, company or phone...">
+                    </div>
+
+                    <select id="statusFilter" aria-label="Filter by status">
+                        <option value="all">All statuses</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CUSTOMER</th>
+                                <th>COMPANY</th>
+                                <th>PHONE</th>
+                                <th>STATUS</th>
+                                <th>DATE ADDED</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="empty-state" id="emptyState" hidden>
+                    <div class="empty-icon">♙</div>
+                    <h3>No customers found</h3>
+                    <p>Start by adding a new customer to your dashboard.</p>
+                    <button class="btn btn-primary" id="emptyAddBtn">
+                        + Add your first customer
+                    </button>
+                </div>
+
+                <div class="table-footer">
+                    <span id="tableSummary">Showing 0 customers</span>
+                    <span>Saved in your browser</span>
+                </div>
+            </section>
+
+            <footer>
+                © <span id="currentYear"></span> My New Project.
+                Customer Management Dashboard.
+            </footer>
+        </main>
+    </div>
+
+    <!-- Add / Edit Customer Modal -->
+    <div class="modal-overlay" id="customerModal" hidden>
+        <section class="modal" role="dialog"
+            aria-modal="true" aria-labelledby="modalTitle">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalTitle">Add Customer</h2>
+                    <p class="muted">Enter the customer information below.</p>
+                </div>
+                <button class="close-button" id="closeModalBtn"
+                    type="button" aria-label="Close">×</button>
+            </div>
+
+            <form id="customerForm">
+                <input type="hidden" id="customerId">
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="customerName">Full Name *</label>
+                        <input id="customerName" type="text"
+                            placeholder="Enter full name" required maxlength="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerEmail">Email Address *</label>
+                        <input id="customerEmail" type="email"
+                            placeholder="name@example.com" required maxlength="150">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerCompany">Company *</label>
+                        <input id="customerCompany" type="text"
+                            placeholder="Enter company" required maxlength="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerPhone">Phone Number *</label>
+                        <input id="customerPhone" type="tel"
+                            placeholder="Enter phone number" required maxlength="25">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="customerStatus">Status</label>
+                        <select id="customerStatus">
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+
+                <p class="form-error" id="formError" role="alert"></p>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary"
+                        id="cancelModalBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary"
+                        id="saveCustomerBtn">Save Customer</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
